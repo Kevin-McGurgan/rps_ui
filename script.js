@@ -15,17 +15,19 @@ function getComputerSelection () {
 function game () {
     while (roundCount < 5) {
         if (playerScore == 3) {
-            return "Great job! You beat the computer.";
+            console.log("Great job! You beat the computer.");
         } else if (computerScore == 3) {
-            return "The computer won. Better luck next time.";
+            console.log("The computer won. Better luck next time.");
         }
     }
 }
 
+// listen for playerSelection
 const rockBtn = document.querySelector("#rock");
-rockBtn.addEventListener("click", () => {
-  playRound("rock", getComputerSelection());
-});
+  rockBtn.addEventListener("click", () => {
+    playRound("rock", getComputerSelection());
+  });
+
 
 const paperBtn = document.querySelector("#paper");
 paperBtn.addEventListener("click", () => {
@@ -59,24 +61,42 @@ const initBanner = document.createElement("p");
   banner.appendChild(initBanner);
 
 
+function playerWinRound () {
+  ++playerScore;
+  ++roundCount;
+  addPScore.textContent = playerScore.toString();
+  addCScore.textContent = computerScore.toString();
+  initBanner.textContent = "You win! " + playerSelection + " beats " + computerSelection;
+}
+
+function computerWinRound () {
+  ++computerScore;
+  ++roundCount;
+  addPScore.textContent = playerScore.toString();
+  addCScore.textContent = computerScore.toString();
+  initBanner.textContent = "You lose. " + computerSelection + " beats " + playerSelection;
+}
+
+function resetGame () {
+  playerScore = 0;
+  computerScore = 0;
+  roundCount = 0;
+}
+
+
 // play a single round
 function playRound (playerSelection, computerSelection) {
     // player wins
     if (playerSelection == "rock" && computerSelection == "scissors" ||
         playerSelection == "paper" && computerSelection == "rock" ||
         playerSelection == "scissors" && computerSelection == "paper")  {
-        ++playerScore;
-        addPScore.textContent = playerScore.toString();
-        initBanner.textContent = "You win! " + playerSelection + " beats " + computerSelection;
+      playerWinRound();
     }
     // computer wins
     else if (computerSelection == "rock" && playerSelection == "scissors" || 
             computerSelection == "paper" && playerSelection == "rock" || 
             computerSelection == "scissors" && playerSelection == "paper")  {
-        ++computerScore;
-        ++roundCount;
-        addCScore.textContent = computerScore.toString();
-        initBanner.textContent = "You lose. " + computerSelection + " beats " + playerSelection;
+      computerWinRound();
     }
     // Draw
     else {
