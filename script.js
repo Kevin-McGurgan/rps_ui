@@ -60,43 +60,33 @@ const initBanner = document.createElement("p");
   initBanner.textContent = "Play best of 5 against the computer."
   banner.appendChild(initBanner);
 
-
-function playerWinRound () {
-  ++playerScore;
-  ++roundCount;
-  addPScore.textContent = playerScore.toString();
-  addCScore.textContent = computerScore.toString();
-  initBanner.textContent = "You win! " + playerSelection + " beats " + computerSelection;
-}
-
-function computerWinRound () {
-  ++computerScore;
-  ++roundCount;
-  addPScore.textContent = playerScore.toString();
-  addCScore.textContent = computerScore.toString();
-  initBanner.textContent = "You lose. " + computerSelection + " beats " + playerSelection;
-}
-
 function resetGame () {
   playerScore = 0;
   computerScore = 0;
   roundCount = 0;
 }
 
-
 // play a single round
 function playRound (playerSelection, computerSelection) {
     // player wins
     if (playerSelection == "rock" && computerSelection == "scissors" ||
-        playerSelection == "paper" && computerSelection == "rock" ||
-        playerSelection == "scissors" && computerSelection == "paper")  {
-      playerWinRound();
+      playerSelection == "paper" && computerSelection == "rock" ||
+      playerSelection == "scissors" && computerSelection == "paper")  {
+        ++playerScore;
+        ++roundCount;
+        addPScore.textContent = playerScore.toString();
+        addCScore.textContent = computerScore.toString();
+        initBanner.textContent = "You win! " + playerSelection + " beats " + computerSelection;
     }
     // computer wins
     else if (computerSelection == "rock" && playerSelection == "scissors" || 
-            computerSelection == "paper" && playerSelection == "rock" || 
-            computerSelection == "scissors" && playerSelection == "paper")  {
-      computerWinRound();
+      computerSelection == "paper" && playerSelection == "rock" || 
+      computerSelection == "scissors" && playerSelection == "paper")  {
+        ++computerScore;
+        ++roundCount;
+        addPScore.textContent = playerScore.toString();
+        addCScore.textContent = computerScore.toString();
+        initBanner.textContent = "You lose. " + computerSelection + " beats " + playerSelection;
     }
     // Draw
     else {
